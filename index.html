@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructivo: Filtro de Agua Casero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutrals (Slate) with an Informative Accent (Indigo) -->
+    <!-- Application Structure Plan: Se diseñó una SPA (Single Page Application) con navegación por pestañas (Tabs). Esta arquitectura es superior a un documento lineal porque el usuario está completando una tarea (construir algo). La estructura de pestañas (Inicio, Materiales, Armado, Uso y Cuidado) le permite al usuario enfocarse en una fase del proceso a la vez (ej. "Reunir Materiales") y luego moverse a la siguiente ("Pasos de Armado") sin perderse en un texto largo. La interacción principal es hacer clic en las pestañas para cambiar dinámicamente el contenido visible. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Lista de Materiales (Tabla). Goal: Permitir al usuario preparar sus herramientas. Viz/Presentation: Se cambió la tabla por una cuadrícula (HTML/Tailwind Grid) de "tarjetas de material" para una mejor legibilidad y estética. Interaction: Visual. Justification: Más limpio y moderno que una tabla simple.
+        - Report Info: Pasos de Armado (Lista) y Capas (Texto). Goal: Guiar la construcción. Viz/Presentation: 1) Lista numerada para los pasos. 2) Diagrama visual de las capas del filtro (HTML/Tailwind DIVs) para reemplazar la descripción de texto. Interaction: Visual. Justification: Un diagrama visual es infinitamente más claro para mostrar las capas que el texto.
+        - Report Info: Advertencia "Importante". Goal: Resaltar riesgo de seguridad. Viz/Presentation: Componente de "Alerta" (HTML/Tailwind) con colores de advertencia (rojo/amarillo). Interaction: Estático. Justification: Atrae la atención del usuario al punto más crítico.
+        - No se usaron gráficos (Chart.js) ya que el reporte es instructivo, no cuantitativo.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .nav-link {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-link.active {
+            border-bottom-color: #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .material-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+        .material-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+        
+        <header class="p-6 bg-slate-50 border-b border-gray-200">
+            <h1 class="text-3xl font-bold text-center text-indigo-700">Filtro de Agua Casero</h1>
+            <p class="text-center text-lg text-slate-600 mt-1">Una guía interactiva paso a paso.</p>
+        </header>
+
+        <nav class="flex border-b border-gray-200 bg-white">
+            <button class="nav-link active flex-1 py-4 px-2 text-center text-sm sm:text-base font-medium text-slate-500 border-b-4 border-transparent hover:border-gray-300" data-target="inicio">
+                <span class="sm:hidden">🏠</span>
+                <span class="hidden sm:inline">Inicio</span>
+            </button>
+            <button class="nav-link flex-1 py-4 px-2 text-center text-sm sm:text-base font-medium text-slate-500 border-b-4 border-transparent hover:border-gray-300" data-target="materiales">
+                <span class="sm:hidden">🧰</span>
+                <span class="hidden sm:inline">Materiales</span>
+            </button>
+            <button class="nav-link flex-1 py-4 px-2 text-center text-sm sm:text-base font-medium text-slate-500 border-b-4 border-transparent hover:border-gray-300" data-target="armado">
+                <span class="sm:hidden">🏗️</span>
+                <span class="hidden sm:inline">Armado</span>
+            </button>
+            <button class="nav-link flex-1 py-4 px-2 text-center text-sm sm:text-base font-medium text-slate-500 border-b-4 border-transparent hover:border-gray-300" data-target="uso">
+                <span class="sm:hidden">💧</span>
+                <span class="hidden sm:inline">Uso y Cuidado</span>
+            </button>
+        </nav>
+
+        <main class="p-6 md:p-10">
+            
+            <section id="inicio-content" class="content-section active">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Bienvenido a la Guía Interactiva</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    Este instructivo te guiará paso a paso para construir un sistema básico de filtrado de agua usando una botella de plástico y materiales simples. La filtración es un método excelente para limpiar el agua de partículas grandes y mejorar su apariencia.
+                </p>
+                <div class="mt-6 p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-500 text-indigo-800">
+                    <p class="font-semibold">Navegación:</p>
+                    <p class="text-sm">Usa las pestañas de arriba (Materiales, Armado, Uso) para moverte por las diferentes fases del proyecto. ¡Empecemos!</p>
+                </div>
+            </section>
+
+            <section id="materiales-content" class="content-section">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Materiales Necesarios</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    Antes de empezar, asegurate de tener todos los materiales listos. Esta seccion detalla cada componente y su funcion dentro del filtro.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="material-card">
+                        <h3 class="font-bold text-lg text-indigo-700">Botella PET y Tapa</h3>
+                        <p class="text-slate-600 text-sm">Será la estructura principal y la base de soporte del filtro.</p>
+                    </div>
+                    <div class="material-card">
+                        <h3 class="font-bold text-lg text-indigo-700">Carbón y Bagazo</h3>
+                        <p class="text-slate-600 text-sm">Son los agentes filtrantes clave que retendrán las impurezas del agua.</p>
+                    </div>
+                    <div class="material-card">
+                        <h3 class="font-bold text-lg text-indigo-700">Aguja y Fuente de Calor</h3>
+                        <p class="text-slate-600 text-sm">Necesarios para realizar las perforaciones finas en la tapa.</p>
+                    </div>
+                    <div class="material-card">
+                        <h3 class="font-bold text-lg text-indigo-700">Cuchillo o Tijeras</h3>
+                        <p class="text-slate-600 text-sm">Se usarán para cortar la base de la botella y crear la abertura de entrada.</p>
+                    </div>
+                    <div class="material-card">
+                        <h3 class="font-bold text-lg text-indigo-700">Recipiente Limpio</h3>
+                        <p class="text-slate-600 text-sm">Para recolectar el agua filtrada cuando uses el dispositivo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="armado-content" class="content-section">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Instrucciones de Armado</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    Sigue estos cuatro pasos en orden. La parte más importante es colocar las capas de filtrado correctamente.
+                </p>
+                
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="flex-1 space-y-4">
+                        <div class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center mr-3">1</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Preparar la Base</h3>
+                                <p class="text-slate-600"><strong>Cortar con cuidado la base de la botella</strong> (la parte ancha) para crear una abertura grande. Por aquí se introducirán los materiales.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center mr-3">2</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Perforar y Sellar</h3>
+                                <p class="text-slate-600"><strong>Hacer perforaciones en la tapa</strong> (y el cuello de la botella) usando una aguja caliente. Luego, enroscar y **asegurar que la tapa esté bien cerrada**.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center mr-3">3</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Cargar Agentes Filtrantes</h3>
+                                <p class="text-slate-600">Colocar los materiales en capas en el orden correcto (ver diagrama). Es crucial para el funcionamiento.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center mr-3">4</span>
+                            <div>
+                                <h3 class="font-semibold text-lg">Verificación Final</h3>
+                                <p class="text-slate-600">Asegurarse de que la tapa esté firme y las capas compactas para evitar fugas.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 lg:max-w-xs mx-auto w-full">
+                        <h3 class="font-semibold text-center text-gray-700 mb-2">Diagrama de Capas (Vista Interior)</h3>
+                        <div class="w-full max-w-xs mx-auto bg-blue-100 rounded-t-3xl rounded-b-lg p-3 border-4 border-blue-300 relative" style="clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 70% 90%, 70% 100%, 30% 100%, 30% 90%, 0% 90%);">
+                            <div class="text-center p-4 bg-blue-200 rounded-t-xl">
+                                <span class="text-sm text-blue-800 font-medium">Entrada de Agua (Base Cortada)</span>
+                            </div>
+                            <div class="text-center p-4 bg-gray-200 mt-2">
+                                <span class="font-medium text-gray-700">Capa 3: PET / Tela</span>
+                            </div>
+                            <div class="text-center p-6 bg-yellow-100 mt-2">
+                                <span class="font-medium text-yellow-800">Capa 2: Bagazo</span>
+                            </div>
+                            <div class="text-center p-8 bg-gray-700 mt-2 rounded-b-md">
+                                <span class="font-medium text-white">Capa 1: Carbón</span>
+                            </div>
+                            <div class="absolute bottom-1 left-1/2 -translate-x-1/2 text-blue-800">
+                                <span class="text-4xl">↓</span>
+                            </div>
+                        </div>
+                        <div class="text-center text-sm text-slate-500 mt-1">Tapa (con perforaciones)</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="uso-content" class="content-section">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Modo de Uso y Advertencia</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    Una vez construido el filtro, esta sección explica cómo operarlo de forma segura y cuál es la advertencia de seguridad más importante.
+                </p>
+                
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Pasos para Usar el Filtro:</h3>
+                <ol class="list-decimal list-inside space-y-2 mb-6 text-gray-700">
+                    <li><strong>Colocar un recipiente limpio</strong> debajo del filtro (donde está la tapa perforada).</li>
+                    <li><strong>Vertir el agua</strong> que se desee purificar lentamente por la parte superior (la base cortada).</li>
+                    <li><strong>Esperar a que el agua gotee</strong> y caiga limpia en el recipiente de recolección.</li>
+                </ol>
+
+                <div class="mt-8 p-4 bg-red-100 text-red-800 rounded-lg shadow-md border-l-4 border-red-500">
+                    <p class="font-bold text-lg">⚠️ ¡Importante! Advertencia de Seguridad</p>
+                    <p class="mt-2">
+                        Este filtro casero es un método básico que solo elimina partículas grandes y mejora el aspecto del agua. <strong>No elimina bacterias, virus ni garantiza que el agua sea potable.</strong>
+                    </p>
+                    <p class="font-semibold mt-2">Se recomienda un tratamiento adicional (como hervir el agua) antes del consumo humano.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const activeLinkClass = 'active';
+            const activeContentClass = 'active';
+
+            const defaultActiveTab = document.querySelector('.nav-link.active');
+            if (defaultActiveTab) {
+                const targetId = defaultActiveTab.dataset.target;
+                const activeContent = document.getElementById(targetId + '-content');
+                if (activeContent) {
+                    activeContent.classList.add(activeContentClass);
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const targetId = link.dataset.target;
+                    
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove(activeLinkClass);
+                    });
+                    
+                    contentSections.forEach(section => {
+                        section.classList.remove(activeContentClass);
+                    });
+                    
+                    link.classList.add(activeLinkClass);
+                    
+                    const targetContent = document.getElementById(targetId + '-content');
+                    if (targetContent) {
+                        targetContent.classList.add(activeContentClass);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
